@@ -22,8 +22,11 @@ namespace KilnTimeViewer
 
 		public override void Dispose()
 		{
-			harmony.UnpatchAll(harmony.Id);
-			harmony = null;
+			if (harmony is Harmony)
+			{
+				harmony.UnpatchAll(harmony.Id);
+				harmony = null;
+			}
 			base.Dispose();
 		}
 	}
