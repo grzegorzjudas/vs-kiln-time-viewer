@@ -2,9 +2,11 @@
     "type": "code",
     "modid": "kilntimeviewer",
     "name": "Kiln Time Viewer",
+    "description": "Displays the remaining time to completion when looking at a lit pottery kiln.",
     "authors": ["Noelle Lavenza"],
-    "version": "1.0.0",
+    "version": "1.0.2",
+    "side": "Client",
     "dependencies": {
-        "game": "1.17.0"
+        "game": "*"
     }
 }

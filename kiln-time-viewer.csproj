@@ -1,16 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFramework>net461</TargetFramework>
-		<LangVersion>9</LangVersion>
+		<TargetFramework>net7.0</TargetFramework>
+		<LangVersion>11</LangVersion>
         <VINTAGE_STORY>C:\Users\User\AppData\Roaming\Vintagestory</VINTAGE_STORY>
         <VINTAGE_STORY_DATA>C:\Users\User\AppData\Roaming\VintagestoryData</VINTAGE_STORY_DATA>
+        <Configurations>Debug;Release;ReleaseToMods</Configurations>
 	</PropertyGroup>
 	
 	<ItemGroup>
-        <Reference Include="Vintagestory">
-            <HintPath>$(VINTAGE_STORY)\Vintagestory.exe</HintPath>
-            <Private>false</Private>
-        </Reference>
         <Reference Include="VintagestoryAPI">
             <HintPath>$(VINTAGE_STORY)\VintagestoryAPI.dll</HintPath>
             <Private>false</Private>
@@ -40,14 +37,6 @@
             <HintPath>$(VINTAGE_STORY)\Lib\cairo-sharp.dll</HintPath>
             <Private>false</Private>
         </Reference>
-        <Reference Include="Newtonsoft.Json">
-            <HintPath>$(VINTAGE_STORY)\Lib\Newtonsoft.Json.dll</HintPath>
-            <Private>false</Private>
-        </Reference>
-        <Reference Include="protobuf-net">
-            <HintPath>$(VINTAGE_STORY)\Lib\protobuf-net.dll</HintPath>
-            <Private>false</Private>
-        </Reference>
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(Configuration)' == 'ReleaseToMods'">
@@ -60,6 +49,6 @@
 	</ItemGroup>
 	
 	<Target Name="Package" AfterTargets="PostBuildEvent" Condition="'$(Configuration)' == 'ReleaseToMods'">
-		<ZipDirectory DestinationFile="$(VINTAGE_STORY_DATA)/Mods/$(TargetName)-v1.0.0.zip" SourceDirectory="$(TargetDir)" Overwrite="true" />
+		<ZipDirectory DestinationFile="$(VINTAGE_STORY_DATA)/Mods/$(TargetName)-v1.0.2.zip" SourceDirectory="$(TargetDir)" Overwrite="true" />
 	</Target>
 </Project>
