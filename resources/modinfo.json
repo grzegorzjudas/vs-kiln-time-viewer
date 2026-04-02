@@ -4,9 +4,9 @@
     "name": "Kiln Time Viewer",
     "description": "Displays the remaining time to completion when looking at a lit pottery kiln.",
     "authors": ["Noelle Lavenza"],
-    "version": "1.0.2",
+    "version": "1.1.0",
     "side": "Client",
     "dependencies": {
-        "game": "*"
+        "game": "1.21.1"
     }
 }

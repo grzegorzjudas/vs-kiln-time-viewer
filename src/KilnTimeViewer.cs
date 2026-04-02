@@ -8,14 +8,16 @@ namespace KilnTimeViewer
 {
 	class KilnTimeViewer : ModSystem
 	{
+		internal const string ModId = "kilntimeviewer";
 		internal static Harmony harmony;
+
 		public override void Start(ICoreAPI api)
 		{
 			api.World.Logger.Event("started 'KilnTimeViewer' mod");
 			// TODO: Change to use a behavior when BEPitKiln.GetBlockInfo calls its base definition
 			if (harmony is null)
 			{
-				harmony = new Harmony("KilnTimeViewer");
+				harmony = new Harmony(ModId);
 				harmony.PatchAll();
 			}
 		}

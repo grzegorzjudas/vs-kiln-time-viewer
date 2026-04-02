@@ -1,54 +1,60 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFramework>net7.0</TargetFramework>
+		<TargetFramework>net8.0</TargetFramework>
 		<LangVersion>11</LangVersion>
-        <VINTAGE_STORY>C:\Users\User\AppData\Roaming\Vintagestory</VINTAGE_STORY>
-        <VINTAGE_STORY_DATA>C:\Users\User\AppData\Roaming\VintagestoryData</VINTAGE_STORY_DATA>
-        <Configurations>Debug;Release;ReleaseToMods</Configurations>
+		<Version>1.1.0</Version>
+		<VINTAGE_STORY Condition="'$(VINTAGE_STORY)' == '' and $([MSBuild]::IsOSPlatform('Windows'))">$(AppData)\Vintagestory</VINTAGE_STORY>
+		<VINTAGE_STORY Condition="'$(VINTAGE_STORY)' == '' and $([MSBuild]::IsOSPlatform('OSX'))">/Applications/Vintage Story.app</VINTAGE_STORY>
+		<VINTAGE_STORY_DATA Condition="'$(VINTAGE_STORY_DATA)' == '' and $([MSBuild]::IsOSPlatform('Windows'))">$(AppData)\VintagestoryData</VINTAGE_STORY_DATA>
+		<VINTAGE_STORY_DATA Condition="'$(VINTAGE_STORY_DATA)' == '' and $([MSBuild]::IsOSPlatform('OSX'))">$(HOME)/Library/Application Support/VintagestoryData</VINTAGE_STORY_DATA>
+		<Configurations>Debug;Release;ReleaseToMods</Configurations>
 	</PropertyGroup>
 	
 	<ItemGroup>
-        <Reference Include="VintagestoryAPI">
-            <HintPath>$(VINTAGE_STORY)\VintagestoryAPI.dll</HintPath>
-            <Private>false</Private>
-        </Reference>
-        <Reference Include="VintagestoryLib">
-            <HintPath>$(VINTAGE_STORY)\VintagestoryLib.dll</HintPath>
-            <Private>false</Private>
-        </Reference>
-        <Reference Include="VSCreativeMod">
-            <HintPath>$(VINTAGE_STORY)\Mods\VSCreativeMod.dll</HintPath>
-            <Private>false</Private>
-        </Reference>
-        <Reference Include="VSSurvivalMod">
-            <HintPath>$(VINTAGE_STORY)\Mods\VSSurvivalMod.dll</HintPath>
-            <Private>false</Private>
-        </Reference>
-        <Reference Include="VSEssentials">
-            <HintPath>$(VINTAGE_STORY)\Mods\VSEssentials.dll</HintPath>
-            <Private>false</Private>
-        </Reference>
-        <!-- Vintage Story Included Libraries -->
-        <Reference Include="0Harmony">
-            <HintPath>$(VINTAGE_STORY)\Lib\0Harmony.dll</HintPath>
-            <Private>false</Private>
-        </Reference>
-        <Reference Include="cairo-sharp">
-            <HintPath>$(VINTAGE_STORY)\Lib\cairo-sharp.dll</HintPath>
-            <Private>false</Private>
-        </Reference>
+		<Reference Include="VintagestoryAPI">
+			<HintPath>$(VINTAGE_STORY)/VintagestoryAPI.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+		<Reference Include="VintagestoryLib">
+			<HintPath>$(VINTAGE_STORY)/VintagestoryLib.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+		<Reference Include="VSCreativeMod">
+			<HintPath>$(VINTAGE_STORY)/Mods/VSCreativeMod.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+		<Reference Include="VSSurvivalMod">
+			<HintPath>$(VINTAGE_STORY)/Mods/VSSurvivalMod.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+		<Reference Include="VSEssentials">
+			<HintPath>$(VINTAGE_STORY)/Mods/VSEssentials.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+		<!-- Vintage Story Included Libraries -->
+		<Reference Include="0Harmony">
+			<HintPath>$(VINTAGE_STORY)/Lib/0Harmony.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+		<Reference Include="cairo-sharp">
+			<HintPath>$(VINTAGE_STORY)/Lib/cairo-sharp.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
 	</ItemGroup>
 
-	<ItemGroup Condition="'$(Configuration)' == 'ReleaseToMods'">
-		<None Include="UNLICENSE" CopyToOutputDirectory="PreserveNewest" />
-		<None Include="README.md" CopyToOutputDirectory="PreserveNewest" />
+	<ItemGroup>
 		<None Include="resources/**">
 			<Link>%(RecursiveDir)%(Filename)%(Extension)</Link>
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 	</ItemGroup>
+
+	<ItemGroup Condition="'$(Configuration)' == 'ReleaseToMods'">
+		<None Include="UNLICENSE" CopyToOutputDirectory="PreserveNewest" />
+		<None Include="README.md" CopyToOutputDirectory="PreserveNewest" />
+	</ItemGroup>
 	
 	<Target Name="Package" AfterTargets="PostBuildEvent" Condition="'$(Configuration)' == 'ReleaseToMods'">
-		<ZipDirectory DestinationFile="$(VINTAGE_STORY_DATA)/Mods/$(TargetName)-v1.0.2.zip" SourceDirectory="$(TargetDir)" Overwrite="true" />
+		<ZipDirectory DestinationFile="$(VINTAGE_STORY_DATA)/Mods/$(TargetName)-v$(Version).zip" SourceDirectory="$(TargetDir)" Overwrite="true" />
 	</Target>
 </Project>
